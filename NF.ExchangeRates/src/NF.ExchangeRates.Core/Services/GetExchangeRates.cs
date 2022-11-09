@@ -8,14 +8,12 @@ namespace NF.ExchangeRates.Core.Services
         private readonly IExchangeRateRetriever _retriever;
         private readonly ILogger<GetExchangeRate> _logger;
         private readonly IExchangeRateReader _reader;
-        private readonly IExchangeRateWriter _writer;
 
-        public GetExchangeRate(IExchangeRateRetriever retriever, ILogger<GetExchangeRate> logger, IExchangeRateReader reader, IExchangeRateWriter writer)
+        public GetExchangeRate(IExchangeRateRetriever retriever, ILogger<GetExchangeRate> logger, IExchangeRateReader reader)
         {
             _retriever = retriever;
             _logger = logger;
             _reader = reader;
-            _writer = writer;
         }
 
         public Task<ExchangeRate> Execute(int userId, string from, string to, CancellationToken cancellationToken = default)
@@ -55,8 +53,6 @@ namespace NF.ExchangeRates.Core.Services
             _logger.LogInformation("Valid Rate {FromCurrency} -> {ToCurrency} not found in datastore. Retrieving from external provider", from, to);
 
             var providerRate = (await _retriever.GetExchangeRate(from, to, cancellationToken));
-
-            await _writer.Write(from, to, providerRate.Rate, cancellationToken);
 
             return providerRate;
         }

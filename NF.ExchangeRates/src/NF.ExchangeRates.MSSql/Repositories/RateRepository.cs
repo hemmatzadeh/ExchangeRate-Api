@@ -36,10 +36,10 @@ namespace NF.ExchangeRates.MsSql.Repositories
         public async Task SaveRatesAsync(string from, Dictionary<string, decimal> Quotes, CancellationToken cancellationToken)
         {
             var created = _clock.UtcNow;
-            List<RateInfo> rateList = new List<RateInfo>();
+            
             foreach (var rate in Quotes)
             {
-                rateList.Add(new RateInfo
+                _dbContext.Rates.Add(new RateInfo
                 {
                     BaseCurrency = from,
                     Rate = rate.Value,
@@ -47,7 +47,7 @@ namespace NF.ExchangeRates.MsSql.Repositories
                     ToCurrency = rate.Key.Substring(3)
                 });
             }
-            _dbContext.Rates.AddRange(rateList);
+            
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
