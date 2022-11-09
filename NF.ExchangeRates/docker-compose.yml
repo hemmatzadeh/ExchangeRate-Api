@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  exchangedb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+
+  nf.exchangerates.api:
+    image: ${DOCKER_REGISTRY-}nfexchangeratesapi
+    build:
+      context: .
+      dockerfile: src/NF.ExchangeRates.Api/Dockerfile
+
+  nf.exchangerates.mssql.dbup:
+    image: ${DOCKER_REGISTRY-}nfexchangeratesmssqldbup
+    build:
+      context: .
+      dockerfile: src/NF.ExchangeRates.MsSql.DbUp/Dockerfile
+

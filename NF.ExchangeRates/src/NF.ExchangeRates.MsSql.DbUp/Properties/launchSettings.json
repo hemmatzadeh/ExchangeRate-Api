@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NF.ExchangeRates.MsSql.DbUp": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
