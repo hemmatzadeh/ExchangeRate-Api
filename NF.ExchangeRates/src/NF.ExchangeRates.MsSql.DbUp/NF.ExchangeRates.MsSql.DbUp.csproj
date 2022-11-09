@@ -10,11 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scripts\002 - UserExchange table creation.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\001 - Initial schema creation.sql" />
+    <EmbeddedResource Include="Scripts\002 - UserExchange table creation.sql" />
   </ItemGroup>
 
   <ItemGroup>

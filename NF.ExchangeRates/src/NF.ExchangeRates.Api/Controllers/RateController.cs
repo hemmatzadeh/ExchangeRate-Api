@@ -17,10 +17,10 @@ namespace NF.ExchangeRates.Api.Controllers
             _query = query;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] ExchangeRateRequest request)
+        [HttpGet("/api/Rate/{From}/{To}")]
+        public async Task<IActionResult> Get([FromRoute] GetRateRequest request)
         {
-            var validator = new ExchangeRateRequestValidator();
+            var validator = new GetRateRequestValidator();
             var validationResult = validator.Validate(request);
             if (!validationResult.IsValid)
             {
@@ -30,7 +30,7 @@ namespace NF.ExchangeRates.Api.Controllers
             _logger.LogInformation("Request to retrieve exchange rate received: {@Request}", request);
             var rate = await _query.Execute(request.UserId, request.From.ToUpperInvariant(), request.To.ToUpperInvariant());
 
-            var response = new ExchangeRateResponse
+            var response = new GetRateResponse
             {
                 From = request.From.ToUpperInvariant(),
                 Created = rate.Created,
@@ -39,6 +39,12 @@ namespace NF.ExchangeRates.Api.Controllers
             };
 
             return Ok(response);
+        }
+
+        [HttpPost("/api/Exchange/{UserId}/{From}/{To}/{Amount}")]
+        public async Task<IActionResult> Exchange([FromRoute] ExchangeRequest request)
+        {
+            return Ok();
         }
     }
 }
