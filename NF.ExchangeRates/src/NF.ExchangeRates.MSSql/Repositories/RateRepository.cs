@@ -2,7 +2,6 @@
 using NF.ExchangeRates.Core.Entities;
 using NF.ExchangeRates.Core.Interfaces;
 using NF.ExchangeRates.MsSql.Persistence;
-using System.Threading;
 
 namespace NF.ExchangeRates.MsSql.Repositories
 {

@@ -19,9 +19,11 @@ namespace NF.ExchangeRates.MsSql
             });
 
             services.AddScoped<IRateRepository, RateRepository>();
+            services.AddScoped<IUserExchangeRepository, UserExchangeRepository>();
             services.AddScoped<IExchangeRateReader, MsSqlExchangeRateReader>();
             services.AddScoped<IExchangeRateWriter, MsSqlExchangeRateWriter>();
-
+            services.AddScoped<IMoneyExchangeReader, MsSqlMoneyExchangeReader>();
+            services.AddScoped<IMoneyExchangeWriter, MsSqlMoneyExchangeWriter>();
             return services;
         }
     }

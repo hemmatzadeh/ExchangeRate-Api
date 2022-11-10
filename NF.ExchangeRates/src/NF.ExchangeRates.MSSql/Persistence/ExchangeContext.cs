@@ -11,10 +11,12 @@ namespace NF.ExchangeRates.MsSql.Persistence
         }
 
         public DbSet<RateInfo> Rates { get; set; }
+        public DbSet<UserExchangeInfo> userExchangeInfos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RateInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new UserExchangeConfiguration());
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
