@@ -38,7 +38,8 @@ namespace NF.ExchangeRates.Api
                 .AddSqlServer(builder.Configuration.GetConnectionString("Default"), failureStatus: HealthStatus.Unhealthy, timeout: TimeSpan.FromSeconds(15), tags: new[] { "ready" });
 
             builder.Services.AddMediatR(typeof(Clock));
-
+            builder.Services.AddMemoryCache();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

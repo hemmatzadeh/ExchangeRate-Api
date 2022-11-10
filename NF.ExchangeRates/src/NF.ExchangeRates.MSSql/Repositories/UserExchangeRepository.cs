@@ -29,14 +29,16 @@ namespace NF.ExchangeRates.MsSql.Repositories
                 Created = _clock.UtcNow,
                 BaseCurrency = from,
                 ExchangeRate = rate,
-                ToCurrency = to,
-                ConvertedAmount = amount * rate
+                ToCurrency = to
             };
 
-            _dbContext.userExchangeInfos.Add(model);
-            await _dbContext.SaveChangesAsync();
-
-            return model.ConvertedAmount;
+            await _dbContext.Database.ExecuteSqlRawAsync(buildSqlCmd(model), cancellationToken);
+            
+            return model.Amount* model.ExchangeRate;
         }
+
+        private string buildSqlCmd(UserExchangeInfo model) =>
+            $"exec AddUserTrade {model.UserId},'{model.BaseCurrency}','{model.ToCurrency}',{model.Amount},{model.ExchangeRate}";
+
     }
 }

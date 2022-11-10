@@ -6,5 +6,6 @@
         public string ToCurrency { get; set; }
         public decimal Rate { get; set; }
         public DateTime Created { get; set; }
+        public string Message { get; set; }
     }
 }

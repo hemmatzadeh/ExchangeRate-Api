@@ -34,13 +34,13 @@ namespace NF.ExchangeRates.Api.Controllers
 
             var response = new GetRateResponse
             {
-                From = request.From.ToUpperInvariant(),
+                From = request.From,
                 Created = rate.Created,
-                To = rate.ToCurrency.ToUpperInvariant(),
+                To = rate.ToCurrency,
                 Rate = rate.Rate
             };
 
-            return Ok(response);
+            return Ok(new { result = response, rate.Message });
         }
 
         [HttpPost("/api/Exchange/{UserId}/{From}/{To}/{Amount}")]
@@ -54,9 +54,13 @@ namespace NF.ExchangeRates.Api.Controllers
                 return BadRequest(validationResult);
             }
             _logger.LogInformation("Request to money exchange received: {@Request}", request);
-            var result = _exchange.Execute(request.UserId, request.From, request.To, request.Amount);
+            
+            var rate = await _query.Execute(request.From.ToUpperInvariant(), request.To.ToUpperInvariant());
+            _logger.LogInformation($"Read exchange rate {request.From}-{request.To}:{rate.Rate}");
+            
+            var result =await _exchange.Execute(request.UserId, rate.BaseCurrency, rate.ToCurrency, request.Amount, rate.Rate);
 
-            return Ok();
+            return Ok(new { result, rate.Message });
         }
     }
 }

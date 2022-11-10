@@ -2,6 +2,6 @@
 {
     public interface IMoneyExchangeService
     {
-        Task<ExchangeResult> Execute(int userId, string from, string to, decimal amount, CancellationToken cancellationToken = default);
+        Task<ExchangeResult> Execute(int userId, string from, string to, decimal amount,decimal rate, CancellationToken cancellationToken = default);
     }
 }

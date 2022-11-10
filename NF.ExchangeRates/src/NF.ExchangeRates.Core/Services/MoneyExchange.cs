@@ -12,20 +12,18 @@ namespace NF.ExchangeRates.Core.Services
         private readonly IClock _clock;
         private readonly ExchangeSettings _options;
         private readonly IMoneyExchangeReader _exchangeReader;
-        private readonly IGetExchangeRate _query;
         private readonly IMoneyExchangeWriter _writer;
-        public MoneyExchangeService(ILogger<MoneyExchangeService> logger, IClock clock, 
-            IOptions<ExchangeSettings> options, IMoneyExchangeReader exchangeReader, IGetExchangeRate query, IMoneyExchangeWriter writer)
+        public MoneyExchangeService(ILogger<MoneyExchangeService> logger, IClock clock,
+            IOptions<ExchangeSettings> options, IMoneyExchangeReader exchangeReader, IMoneyExchangeWriter writer)
         {
             _logger = logger;
             _clock = clock;
             _options = options.Value;
             _exchangeReader = exchangeReader;
-            _query = query;
             _writer = writer;
         }
 
-        public async Task<ExchangeResult> Execute(int userId, string from, string to, decimal amount, CancellationToken cancellationToken = default)
+        public async Task<ExchangeResult> Execute(int userId, string from, string to, decimal amount, decimal rate, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation($"Attempting to make money exchange userId:{userId}, from:{from}, to:{to}, amount:{amount}");
 
@@ -39,16 +37,9 @@ namespace NF.ExchangeRates.Core.Services
                 throw new RequestLimitExceededException("Exceeded request limit");
             }
 
-            var rate = await _query.Execute(from, to, cancellationToken);
-            if (rate == null)
-            {
-                _logger.LogError($"Exchange rate {from} to {to} not found!");
-                throw new RateNotFoundException($"Exchange rate {from} to {to} not found!");
-            }
+            var converted = await _writer.Execute(userId, from, to, amount, rate, cancellationToken);
 
-            var converted = await _writer.Execute(userId, from, to, amount, rate.Rate, cancellationToken);
-
-            return new ExchangeResult { Amount = amount, ConvertedAmount = converted };
+            return new ExchangeResult { Amount = amount, ConvertedAmount = converted, Rate = rate };
         }
     }
 }

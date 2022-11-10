@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NF.ExchangeRates.Core;
+using NF.ExchangeRates.Core.Commands;
 using NF.ExchangeRates.Core.Interfaces;
 
 namespace NF.ExchangeRates.CurrencyLayer
@@ -19,13 +20,17 @@ namespace NF.ExchangeRates.CurrencyLayer
         public async Task<ExchangeRate> GetExchangeRate(string from, string to, CancellationToken cancellationToken)
         {
             ISingleQuotable response = await _realTimeRatesService.GetRealTimeRates(from, to);
+            
+            var rate = response.Quotes[$"{from}{to}"];
+            
+            await _mediator.Send(new SaveRateRequest() { BaseCurrency = from, ToCurrency = to, Rate = rate }, cancellationToken);
 
             return new ExchangeRate
             {
                 BaseCurrency = from,
-                ToCurrency= to,
-                Rate = response.Quotes[$"{from}{to}"], 
-                Created= _clock.UtcNow,
+                ToCurrency = to,
+                Rate = rate,
+                Created = _clock.UtcNow,
             };
         }
     }

@@ -1,5 +1,5 @@
 # ExchangeRate-Api
-Sample for a microservice Api for Exchange Rate that can read Exchage rate data from more than 1 provider
+Sample for a microservice Api for Exchange Rate that can read Exchage rate data from more than 1 provider.
 
 ---
 
@@ -24,3 +24,16 @@ https://img.shields.io/static/v1?label=<LABEL>&message=<MESSAGE>&color=<COLOR> h
 - [x] RESTful APIs
 - [x] Unit Tests
 - [x] Logging
+- [x] Caching
+- [x] HealthChecks
+
+---
+
+## How to run
+
+- first go to the NF.ExchangeRate.Api project folder, open appSettings.Json and put your access key or api key for currencylayer or apilayer
+- if you have accesskey fo CurrencyLayer, go to the line 29 of program.cs and un-comment it, then comment line 30
+- then go to the NF.ExchangeRates folder and run this command in terminal : `docker compose up --build`
+- when docker compose built and finished its work, in docker desktop execute DbUp project once, it create database and required tables
+- now in your browser try http://localhost/swagger and see the api list and ...
+- also you can check healthcheck endpoint by this url : http://localhost/healthz
