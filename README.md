@@ -6,8 +6,8 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 ## Functionalitis:
 
 -  [x] Integrating to 2 rate provider
-```https://img.shields.io/static/v1?label=<LABEL>&message=<MESSAGE>&color=<COLOR> https://currencylayer.com/```
-```https://img.shields.io/static/v1?label=<LABEL>&message=<MESSAGE>&color=<COLOR> https://apilayer.com/marketplace/currency_data-api```
+[DockDockGo]( https://currencylayer.com/ )
+[DockDockGo]( https://apilayer.com/marketplace/currency_data-api)
 
 - [x] Retainig information abount currency exchange trades carried out by its clients in database
 - [x] When an exchange rate is used, it cached and if not older than 30 minutes it used again in other exchanges (30 minutes is configurable in appSettings.json)
