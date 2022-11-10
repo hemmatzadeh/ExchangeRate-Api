@@ -21,4 +21,5 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 - [x] MsSQL Server 2022
 - [x] RESTful APIs
 - [x] Unit Tests
+- [x] Caching
 - [x] Logging
