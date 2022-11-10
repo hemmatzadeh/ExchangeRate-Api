@@ -2,7 +2,7 @@
 Sample for a microservice Api for Exchange Rate that can read Exchage rate data from more than 1 provider.
 
 ---
-
+[screen shot](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/execution-01.png)
 ## Functionalitis:
 
 -  [x] Integrating to 2 rate providers : [CurrencyLayer]( https://currencylayer.com/ ) and [ApiLayer-Currency-data]( https://apilayer.com/marketplace/currency_data-api)
