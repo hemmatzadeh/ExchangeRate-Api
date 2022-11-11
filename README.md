@@ -13,7 +13,7 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 
 ---
 
-## Technologies
+## Technics and Technologies
 
 - [x] C# (.NET 6 Web Api)
 - [x] Docker/ Docker Compose
@@ -29,7 +29,7 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 
 ---
 
-## How to run
+## How To Run
 
 - first go to the NF.ExchangeRate.Api project folder, open appSettings.Json and put your [access key](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/appsettings.json#L17) or [api key](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/appsettings.json#L22) for CurrencyLayer or ApiLayer
 - if you have accesskey fo CurrencyLayer, go to the line [29](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/Program.cs#L29) of program.cs and un-comment it, then comment line [30](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/Program.cs#L30)
