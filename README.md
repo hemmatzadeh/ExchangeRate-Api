@@ -22,7 +22,7 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 - [x] RESTful APIs
 - [x] xUnit Tests
 - [x] Fluent Assertion
-- [x] Caching
+- [x] In Memory Caching
 - [x] Logging
 - [x] Fluent Validation
 - [x] HealthChecks
