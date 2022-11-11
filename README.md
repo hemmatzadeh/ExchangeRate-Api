@@ -7,7 +7,7 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 
 -  [x] Integrating to 2 rate providers : [CurrencyLayer]( https://currencylayer.com/ ) and [ApiLayer-Currency-data]( https://apilayer.com/marketplace/currency_data-api)
 
-- [x] Retainig information abount currency exchange trades carried out by its clients in database
+- [x] Retaining information abount currency exchange trades carried out by its clients in database
 - [x] When an exchange rate is used, it cached and if not older than 30 minutes it used again in other exchanges (30 minutes is configurable in appSettings.json)
 - [x] Limiting each client to 10 currency exchange trades per hour ( number 10, is configurable in appSettings.json)
 
