@@ -32,7 +32,7 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 
 ## How To Run
 
-- First go to the NF.ExchangeRate.Api project folder, open appSettings.Json and put your [access key](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/appsettings.json#L17) or [api key](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/appsettings.json#L22) for CurrencyLayer or ApiLayer
+- First go to the `NF.ExchangeRate.Api` project folder, open appSettings.Json and put your [access key](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/appsettings.json#L17) or [api key](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/appsettings.json#L22) for CurrencyLayer or ApiLayer
 - If you have accesskey fo CurrencyLayer, go to the line [29](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/Program.cs#L29) of program.cs and un-comment it, then comment line [30](https://github.com/navidfaridi/ExchangeRate-Api/blob/main/NF.ExchangeRates/src/NF.ExchangeRates.Api/Program.cs#L30)
 - Then go to the NF.ExchangeRates folder and run this command in terminal : `docker compose up --build`
 - When docker compose has finished building, run the DbUp project in docker desktop to construct the necessary databases and tables.
