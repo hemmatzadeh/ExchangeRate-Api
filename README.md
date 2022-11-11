@@ -26,6 +26,7 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 - [x] Logging
 - [x] Fluent Validation
 - [x] HealthChecks
+- [x] MediatR
 
 ---
 
