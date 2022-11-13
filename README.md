@@ -16,18 +16,18 @@ Sample for a microservice Api for Exchange Rate that can read Exchage rate data 
 ## Technics and Technologies
 
 - [x] C# (.NET 6 Web Api)
-- [x] Docker/ Docker Compose
+- [x] Docker / Docker Compose
 - [x] Entity Framework Core
 - [x] MsSQL Server 2022
 - [x] RESTful APIs
-- [x] xUnit Tests
-- [x] Fluent Assertion
 - [x] In Memory Caching
 - [x] Logging
 - [x] Fluent Validation
 - [x] HealthChecks
 - [x] MediatR
-
+- [x] xUnit Tests
+- [x] Fluent Assertion
+- [x] Moq
 ---
 
 ## How To Run
