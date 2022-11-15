@@ -22,13 +22,6 @@ namespace NF.ExchangeRates.Api.Controllers
         [HttpGet("/api/Rate/{From}/{To}")]
         public async Task<IActionResult> Get([FromRoute] GetRateRequest request)
         {
-            var validator = new GetRateRequestValidator();
-            var validationResult = validator.Validate(request);
-            if (!validationResult.IsValid)
-            {
-                _logger.LogError("invalid request: {@Request} \r\n {@validationResult }", request, validationResult);
-                return BadRequest(validationResult);
-            }
             _logger.LogInformation("Request to retrieve exchange rate received: {@Request}", request);
             var rate = await _query.Execute(request.From.ToUpperInvariant(), request.To.ToUpperInvariant());
 
@@ -46,13 +39,6 @@ namespace NF.ExchangeRates.Api.Controllers
         [HttpPost("/api/Exchange/{UserId}/{From}/{To}/{Amount}")]
         public async Task<IActionResult> Exchange([FromRoute] ExchangeRequest request)
         {
-            var validator = new ExchangeRequestValidator();
-            var validationResult = validator.Validate(request);
-            if (!validationResult.IsValid)
-            {
-                _logger.LogError("invalid request: {@Request} \r\n {@validationResult }", request, validationResult);
-                return BadRequest(validationResult);
-            }
             _logger.LogInformation("Request to money exchange received: {@Request}", request);
             
             var rate = await _query.Execute(request.From.ToUpperInvariant(), request.To.ToUpperInvariant());

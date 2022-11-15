@@ -9,6 +9,8 @@ using NF.ExchangeRates.Core;
 using NF.ExchangeRates.CurrencyLayer;
 using NF.ExchangeRates.MsSql;
 using MediatR;
+using FluentValidation.AspNetCore;
+using NF.ExchangeRates.Api.Contracts.Validators;
 
 namespace NF.ExchangeRates.Api
 {
@@ -40,6 +42,16 @@ namespace NF.ExchangeRates.Api
 
 			builder.Services.AddMediatR(typeof(Clock));
 			builder.Services.AddMemoryCache();
+
+			builder.Services.AddFluentValidationAutoValidation(options =>
+			{
+				ValidatorOptions.Global.PropertyNameResolver = Validation.ResolvePropertyName;
+				ValidatorOptions.Global.DisplayNameResolver = Validation.ResolvePropertyName;
+				options.DisableDataAnnotationsValidation = true;
+
+			}).AddFluentValidationClientsideAdapters();
+
+			builder.Services.AddValidatorsFromAssemblyContaining<ExchangeRequestValidator>();
 
 			var app = builder.Build();
 
