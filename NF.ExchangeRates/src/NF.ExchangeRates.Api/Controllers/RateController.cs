@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NF.ExchangeRates.Api.Contracts;
-using NF.ExchangeRates.Api.Contracts.Validators;
 using NF.ExchangeRates.Core.Interfaces;
 
 namespace NF.ExchangeRates.Api.Controllers
@@ -25,13 +24,7 @@ namespace NF.ExchangeRates.Api.Controllers
             _logger.LogInformation("Request to retrieve exchange rate received: {@Request}", request);
             var rate = await _query.Execute(request.From.ToUpperInvariant(), request.To.ToUpperInvariant());
 
-            var response = new GetRateResponse
-            {
-                From = request.From,
-                Created = rate.Created,
-                To = rate.ToCurrency,
-                Rate = rate.Rate
-            };
+            var response = new GetRateResponse(rate.BaseCurrency, rate.ToCurrency, rate.Rate, rate.Created);
 
             return Ok(new { result = response, rate.Message });
         }
