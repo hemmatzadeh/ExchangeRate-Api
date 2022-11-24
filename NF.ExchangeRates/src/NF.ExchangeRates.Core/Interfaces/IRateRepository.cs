@@ -4,9 +4,9 @@ namespace NF.ExchangeRates.Core.Interfaces
 {
     public interface IRateRepository
     {
-        Task<RateInfo> GetAsync(string baseCurrency, string toCurrency, CancellationToken cancellationToken);
-        Task SaveRateAsync(string from,string to,decimal rate, CancellationToken cancellationToken);
-        Task SaveRatesAsync(string from, Dictionary<string, decimal> Quotes, CancellationToken cancellationToken);
+        Task<RateInfo> GetAsync(short provider, string baseCurrency, string toCurrency, CancellationToken cancellationToken);
+        Task SaveRateAsync(short provider, string from,string to,decimal rate, CancellationToken cancellationToken);
+        Task SaveRatesAsync(short provider, string from, Dictionary<string, decimal> Quotes, CancellationToken cancellationToken);
 
     }
 }

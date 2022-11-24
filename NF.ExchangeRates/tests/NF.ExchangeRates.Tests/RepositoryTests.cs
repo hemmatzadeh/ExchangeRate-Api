@@ -2,6 +2,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NF.ExchangeRates.Core;
+using NF.ExchangeRates.Core.Enums;
 using NF.ExchangeRates.MsSql.Persistence;
 using NF.ExchangeRates.MsSql.Repositories;
 
@@ -30,7 +31,7 @@ namespace NF.ExchangeRates.Tests
             var clock = new Clock();
             var rep = new RateRepository(_context, clock);
 
-            var data = await rep.GetAsync("USD", "TRY", CancellationToken.None);
+            var data = await rep.GetAsync((short)ApiProviders.ApiLayer,"USD", "TRY", CancellationToken.None);
 
             data.Should().BeNull();
         }
@@ -44,9 +45,9 @@ namespace NF.ExchangeRates.Tests
             var clock = new Clock();
             var rep = new RateRepository(_context, clock);
 
-            await rep.SaveRateAsync("USD", "TRY", 18.50M, CancellationToken.None);
+            await rep.SaveRateAsync((short)ApiProviders.ApiLayer,"USD", "TRY", 18.50M, CancellationToken.None);
 
-            var data = await rep.GetAsync("USD", "TRY", CancellationToken.None);
+            var data = await rep.GetAsync((short)ApiProviders.ApiLayer,"USD", "TRY", CancellationToken.None);
 
             data.Should().NotBeNull();
             data.BaseCurrency.Should().Be("USD");
@@ -67,7 +68,7 @@ namespace NF.ExchangeRates.Tests
             sentData.Add("USDIRR", 34010.5M);
             sentData.Add("USDCNY", 25.40M);
 
-            await rep.SaveRatesAsync("USD", sentData, CancellationToken.None);
+            await rep.SaveRatesAsync((short)ApiProviders.ApiLayer,"USD", sentData, CancellationToken.None);
 
             var count = _context.Rates.Count();
             count.Should().Be(4);

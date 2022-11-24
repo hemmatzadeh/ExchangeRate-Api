@@ -22,7 +22,14 @@ namespace NF.ExchangeRates.MsSql.Persistence.Configs
                 .HasMaxLength(3);
 
             builder.Property(e=>e.Amount)
+                .HasPrecision(19, 9)
                 .IsRequired();
+
+            builder.Property(e => e.ExchangeRate)
+                .HasPrecision(19, 9);
+
+            builder.Property(e => e.ConvertedAmount)
+                .HasPrecision(19, 9);
         }
     }
 }

@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NF.ExchangeRates.ApiLayerCu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NF.ExchangeRates.Tests", "tests\NF.ExchangeRates.Tests\NF.ExchangeRates.Tests.csproj", "{C48191DF-B9D5-4FFB-96DD-0D1D01412149}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NF.ExchangeRates.ExchangeRateHostCurrencyData", "NF.ExchangeRates.ExchangeRateHostCurrencyData\NF.ExchangeRates.ExchangeRateHostCurrencyData.csproj", "{D2347288-35A5-44A5-9A57-4FB8103738C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{C48191DF-B9D5-4FFB-96DD-0D1D01412149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C48191DF-B9D5-4FFB-96DD-0D1D01412149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C48191DF-B9D5-4FFB-96DD-0D1D01412149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2347288-35A5-44A5-9A57-4FB8103738C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2347288-35A5-44A5-9A57-4FB8103738C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2347288-35A5-44A5-9A57-4FB8103738C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2347288-35A5-44A5-9A57-4FB8103738C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{14626E71-5534-4739-A232-05390145AF93} = {CD37EF84-5804-4BCB-9BB1-5725A2BCB25C}
 		{F5667BA1-887B-4B80-9061-A209673F1E5B} = {CD37EF84-5804-4BCB-9BB1-5725A2BCB25C}
 		{C48191DF-B9D5-4FFB-96DD-0D1D01412149} = {E37B5407-3790-4CD4-98E0-ABDC0B1CF344}
+		{D2347288-35A5-44A5-9A57-4FB8103738C4} = {CD37EF84-5804-4BCB-9BB1-5725A2BCB25C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3336902C-A6FC-40C5-8CC8-9265E0E6CE4B}

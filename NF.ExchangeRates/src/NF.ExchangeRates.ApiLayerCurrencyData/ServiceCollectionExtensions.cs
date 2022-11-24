@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NF.ExchangeRates.Core.Enums;
 using NF.ExchangeRates.Core.Interfaces;
 
 namespace NF.ExchangeRates.ApiLayerCurrencyData
@@ -11,7 +12,9 @@ namespace NF.ExchangeRates.ApiLayerCurrencyData
             services.Configure<ApiLayerCurrencyDataOptions>(configuration.GetSection(ApiLayerCurrencyDataOptions.Section));
 
 
-            services.AddTransient<IExchangeRateRetriever, ApiLayerCurrencyExchangeRateRetriever>();
+            services.AddTransient<ApiLayerCurrencyExchangeRateRetriever>();
+          
+
             return services;
         }
     }

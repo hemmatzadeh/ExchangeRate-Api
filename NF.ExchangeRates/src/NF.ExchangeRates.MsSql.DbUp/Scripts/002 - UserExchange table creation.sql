@@ -2,6 +2,7 @@
 CREATE TABLE [dbo].[UserExchangeInfo] (
     [Id]              INT             IDENTITY (1, 1) NOT NULL,
     [UserId]          INT             NOT NULL,
+    [Provider]        TINYINT         NOT NULL,
     [BaseCurrency]    VARCHAR (3)     NOT NULL,
     [ToCurrency]      VARCHAR (3)     NOT NULL,
     [Amount]          DECIMAL (19, 9) NOT NULL,

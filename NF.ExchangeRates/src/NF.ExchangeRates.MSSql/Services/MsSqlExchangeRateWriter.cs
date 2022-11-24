@@ -1,4 +1,5 @@
-﻿using NF.ExchangeRates.Core.Interfaces;
+﻿using NF.ExchangeRates.Core.Enums;
+using NF.ExchangeRates.Core.Interfaces;
 
 namespace NF.ExchangeRates.MsSql.Services
 {
@@ -10,14 +11,14 @@ namespace NF.ExchangeRates.MsSql.Services
             _rateRepository = rateRepository;
         }
 
-        public async Task Write(string from, string to, decimal rate, CancellationToken cancellationToken = default)
+        public async Task Write(ApiProviders provider, string from, string to, decimal rate, CancellationToken cancellationToken = default)
         {
-            await _rateRepository.SaveRateAsync(from, to, rate, cancellationToken);
+            await _rateRepository.SaveRateAsync((short)provider,from, to, rate, cancellationToken);
         }
 
-        public async Task WriteAll(string from, Dictionary<string, decimal> quotes, CancellationToken cancellationToken = default)
+        public async Task WriteAll(ApiProviders provider, string from, Dictionary<string, decimal> quotes, CancellationToken cancellationToken = default)
         {
-            await _rateRepository.SaveRatesAsync(from, quotes, cancellationToken);
+            await _rateRepository.SaveRatesAsync((short)provider,from, quotes, cancellationToken);
         }
     }
 }

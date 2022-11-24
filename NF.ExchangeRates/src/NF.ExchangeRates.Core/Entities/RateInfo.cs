@@ -2,6 +2,7 @@
 {
     public class RateInfo : EntityBase
     {
+        public short Provider { get; set; }
         public string BaseCurrency { get; set; }
         public string ToCurrency { get; set; }
         public decimal Rate { get; set; }

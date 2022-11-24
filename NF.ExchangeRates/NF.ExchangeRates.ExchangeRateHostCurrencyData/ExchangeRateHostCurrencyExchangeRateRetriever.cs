@@ -1,4 +1,5 @@
-﻿using Flurl.Http;
+﻿using Flurl;
+using Flurl.Http;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -8,16 +9,17 @@ using NF.ExchangeRates.Core.Commands;
 using NF.ExchangeRates.Core.Enums;
 using NF.ExchangeRates.Core.Exceptions;
 using NF.ExchangeRates.Core.Interfaces;
+using NF.ExchangeRates.ExchangeRateHostCurrencyData;
 
-namespace NF.ExchangeRates.ApiLayerCurrencyData
+namespace NF.ExchangeRates.ExchangeRateHostCurrencyData
 {
-    public class ApiLayerCurrencyExchangeRateRetriever : IExchangeRateRetriever
+    public class ExchangeRateHostCurrencyExchangeRateRetriever : IExchangeRateRetriever
     {
         private readonly IClock _clock;
-        private readonly IOptions<ApiLayerCurrencyDataOptions> _options;
-        private readonly ILogger<ApiLayerCurrencyExchangeRateRetriever> _logger;
+        private readonly IOptions<ExchangeRateHostCurrencyDataOptions> _options;
+        private readonly ILogger<ExchangeRateHostCurrencyExchangeRateRetriever> _logger;
         private readonly IMediator _mediator;
-        public ApiLayerCurrencyExchangeRateRetriever(IClock clock, IOptions<ApiLayerCurrencyDataOptions> options, ILogger<ApiLayerCurrencyExchangeRateRetriever> logger, IMediator mediator)
+        public ExchangeRateHostCurrencyExchangeRateRetriever(IClock clock, IOptions<ExchangeRateHostCurrencyDataOptions> options, ILogger<ExchangeRateHostCurrencyExchangeRateRetriever> logger, IMediator mediator)
         {
             _clock = clock;
             _options = options;
@@ -29,8 +31,7 @@ namespace NF.ExchangeRates.ApiLayerCurrencyData
         {
             var apiConfig = _options.Value;
             var response = await apiConfig.BaseAddress
-                .WithHeader("apikey", apiConfig.ApiKey)
-                .SetQueryParams(new { source = from, currencies = to })
+                .SetQueryParams(new { from, to })
                 .GetAsync();
 
             if (response.StatusCode != 200)

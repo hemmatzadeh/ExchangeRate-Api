@@ -15,14 +15,15 @@ namespace NF.ExchangeRates.MsSql.Repositories
             _clock = clock ?? throw new ArgumentNullException();
         }
 
-        public Task<RateInfo> GetAsync(string baseCurrency, string toCurrency, CancellationToken cancellationToken) => _dbContext.Rates
+        public Task<RateInfo> GetAsync(short provider, string baseCurrency, string toCurrency, CancellationToken cancellationToken) => _dbContext.Rates
                 .OrderByDescending(u => u.Id)
-                .FirstOrDefaultAsync(u => u.BaseCurrency == baseCurrency && u.ToCurrency == toCurrency, cancellationToken);
+                .FirstOrDefaultAsync(u => u.Provider == provider && u.BaseCurrency == baseCurrency && u.ToCurrency == toCurrency, cancellationToken);
 
-        public async Task SaveRateAsync(string from, string to, decimal rate, CancellationToken cancellationToken)
+        public async Task SaveRateAsync(short provider, string from, string to, decimal rate, CancellationToken cancellationToken)
         {
             await _dbContext.Rates.AddAsync(new RateInfo
             {
+                Provider = provider,
                 BaseCurrency = from,
                 ToCurrency = to,
                 Created = _clock.UtcNow,
@@ -32,21 +33,22 @@ namespace NF.ExchangeRates.MsSql.Repositories
         }
 
 
-        public async Task SaveRatesAsync(string from, Dictionary<string, decimal> Quotes, CancellationToken cancellationToken)
+        public async Task SaveRatesAsync(short provider, string from, Dictionary<string, decimal> Quotes, CancellationToken cancellationToken)
         {
             var created = _clock.UtcNow;
-            
+
             foreach (var rate in Quotes)
             {
                 _dbContext.Rates.Add(new RateInfo
                 {
+                    Provider = provider,
                     BaseCurrency = from,
                     Rate = rate.Value,
                     Created = created,
                     ToCurrency = rate.Key.Substring(3)
                 });
             }
-            
+
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }

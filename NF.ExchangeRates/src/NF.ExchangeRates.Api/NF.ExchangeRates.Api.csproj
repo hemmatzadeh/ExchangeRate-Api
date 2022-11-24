@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NF.ExchangeRates.ExchangeRateHostCurrencyData\NF.ExchangeRates.ExchangeRateHostCurrencyData.csproj" />
     <ProjectReference Include="..\NF.ExchangeRates.ApiLayerCurrencyData\NF.ExchangeRates.ApiLayerCurrencyData.csproj" />
     <ProjectReference Include="..\NF.ExchangeRates.Core\NF.ExchangeRates.Core.csproj" />
     <ProjectReference Include="..\NF.ExchangeRates.CurrencyLayer\NF.ExchangeRates.CurrencyLayer.csproj" />

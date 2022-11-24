@@ -12,7 +12,7 @@ COPY ["src/NF.ExchangeRates.CurrencyLayer/NF.ExchangeRates.CurrencyLayer.csproj"
 COPY ["src/NF.ExchangeRates.MSSql/NF.ExchangeRates.MsSql.csproj", "src/NF.ExchangeRates.MSSql/"]
 RUN dotnet restore "src/NF.ExchangeRates.Api/NF.ExchangeRates.Api.csproj"
 COPY . .
-WORKDIR "/src/src/NF.ExchangeRates.Api"
+WORKDIR "src/NF.ExchangeRates.Api"
 RUN dotnet build "NF.ExchangeRates.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

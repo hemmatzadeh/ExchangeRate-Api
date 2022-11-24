@@ -10,6 +10,8 @@ namespace NF.ExchangeRates.MsSql.Persistence.Configs
         {
             builder.ToTable("RateInfo");
 
+            builder.Property(e=>e.Rate).HasPrecision(19, 9);
+
             builder.Property(e=>e.Created)
                 .HasColumnType("datetime");
 

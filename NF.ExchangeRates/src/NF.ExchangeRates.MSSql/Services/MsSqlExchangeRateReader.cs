@@ -1,4 +1,5 @@
 ﻿using NF.ExchangeRates.Core;
+using NF.ExchangeRates.Core.Enums;
 using NF.ExchangeRates.Core.Interfaces;
 
 namespace NF.ExchangeRates.MsSql.Services
@@ -11,15 +12,16 @@ namespace NF.ExchangeRates.MsSql.Services
             _rateRepository = rateRepository;
         }
 
-        public async Task<ExchangeRate> Read(string from, string to, CancellationToken cancellationToken = default)
+        public async Task<ExchangeRate> Read(ApiProviders apiProvider,string from, string to,  CancellationToken cancellationToken = default)
         {
-            var data = await _rateRepository.GetAsync(from, to, cancellationToken);
+            var data = await _rateRepository.GetAsync((short)apiProvider, from, to, cancellationToken);
 
             if (data == null)
                 return null;
 
             return new ExchangeRate
             {
+                Provider= apiProvider,
                 BaseCurrency = data.BaseCurrency,
                 Created = data.Created,
                 Rate = data.Rate,

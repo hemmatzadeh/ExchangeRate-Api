@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using NF.ExchangeRates.Core.Enums;
 using NF.ExchangeRates.Core.Interfaces;
 
 namespace NF.ExchangeRates.Core.Commands
 {
     public class SaveRatesRequest : IRequest
     {
+        public ApiProviders Provider { get; set; }
         public string BaseCurrency { get; set; }
         public Dictionary<string, decimal> Quotes { get; set; }
     }
@@ -18,7 +20,7 @@ namespace NF.ExchangeRates.Core.Commands
         }
         public async Task<Unit> Handle(SaveRatesRequest request, CancellationToken cancellationToken)
         {
-            await _writer.WriteAll(request.BaseCurrency, request.Quotes , cancellationToken);
+            await _writer.WriteAll(request.Provider,request.BaseCurrency, request.Quotes , cancellationToken);
             return new Unit();
         }
     }
