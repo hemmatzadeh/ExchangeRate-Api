@@ -1,4 +1,4 @@
-﻿namespace A5Labs.ExchangeRates.Tests
+﻿namespace NF.ExchangeRates.Tests
 {
     using System;
     using System.Threading;
@@ -16,13 +16,14 @@
     using System.Text;
     using MediatR;
     using NF.ExchangeRates.Core.Enums;
+    using NF.ExchangeRates.ApiLayerCurrencyData;
 
     [Trait("Category", "Unit")]
     public class GetExchangeRateServiceTests
     {
         private readonly IServiceProvider _provider;
 
-        private readonly Mock<IExchangeRateRetriever> _retriever = new Mock<IExchangeRateRetriever>();
+        private readonly Mock<Func<ApiProviders, IExchangeRateRetriever>> _retriever = new Mock<Func<ApiProviders, IExchangeRateRetriever>>();
         private readonly Mock<IExchangeRateReader> _reader = new Mock<IExchangeRateReader>();
         private readonly Mock<IExchangeRateWriter> _writer = new Mock<IExchangeRateWriter>();
         private readonly Mock<ILogger<GetExchangeRateService>> _logger = new Mock<ILogger<GetExchangeRateService>>();
@@ -54,7 +55,7 @@
                 .ReturnsAsync(new ExchangeRate() { BaseCurrency = "USD", ToCurrency = "CNY", Rate = 1.23456M, Created = dt });
 
             var getExchange = scope.ServiceProvider.GetRequiredService<IGetExchangeRate>();
-            var data = await getExchange.Execute(ApiProviders.ApiLayer,"USD", "CNY",  CancellationToken.None);
+            var data = await getExchange.Execute(ApiProviders.ApiLayer, "USD", "CNY", CancellationToken.None);
 
             data.Should().BeEquivalentTo(new ExchangeRate() { BaseCurrency = "USD", ToCurrency = "CNY", Rate = 1.23456M, Created = dt, Message = "Read rate from database" });
         }
@@ -67,7 +68,7 @@
             _reader.Setup(e => e.Read(ApiProviders.ApiLayer, "USD", "CNY", It.IsAny<CancellationToken>()))
                 .ReturnsAsync((ExchangeRate)null);
 
-            _retriever.Setup(r => r.GetExchangeRate(ApiProviders.ApiLayer, "USD", "CNY", It.IsAny<CancellationToken>()))
+            _retriever.Setup(r => r(ApiProviders.ApiLayer).GetExchangeRate(ApiProviders.ApiLayer, "USD", "CNY", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new ExchangeRate() { BaseCurrency = "USD", ToCurrency = "CNY", Rate = 1.23456M, Created = dt });
 
             _writer.Setup(e => e.Write(ApiProviders.ApiLayer, "USD", "CNY", 1.23456M, It.IsAny<CancellationToken>()))
@@ -87,14 +88,14 @@
             _reader.Setup(e => e.Read(It.IsAny<ApiProviders>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((ExchangeRate)null);
             var dt = DateTime.UtcNow;
-            _retriever.Setup(r => r.GetExchangeRate(It.IsAny<ApiProviders>(),It.IsAny<string>(), It.IsAny<string>(),  It.IsAny<CancellationToken>()))
+            _retriever.Setup(r => r(ApiProviders.ApiLayer).GetExchangeRate(It.IsAny<ApiProviders>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new ExchangeRate() { Provider = ApiProviders.ApiLayer, BaseCurrency = "CNY", Rate = 1.23456M, Created = dt });
 
             _writer.Setup(e => e.Write(It.IsAny<ApiProviders>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<decimal>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             var getExchange = scope.ServiceProvider.GetRequiredService<IGetExchangeRate>();
-            Func<Task> action = async () => await getExchange.Execute(ApiProviders.ApiLayer,"", "CNY",  CancellationToken.None);
+            Func<Task> action = async () => await getExchange.Execute(ApiProviders.ApiLayer, "", "CNY", CancellationToken.None);
 
             await action.Should().ThrowAsync<ArgumentNullException>();
         }
@@ -107,14 +108,14 @@
             _reader.Setup(e => e.Read(It.IsAny<ApiProviders>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((ExchangeRate)null);
             var dt = DateTime.UtcNow;
-            _retriever.Setup(r => r.GetExchangeRate(It.IsAny<ApiProviders>(),It.IsAny<string>(), It.IsAny<string>(),  It.IsAny<CancellationToken>()))
+            _retriever.Setup(r => r(ApiProviders.ApiLayer).GetExchangeRate(It.IsAny<ApiProviders>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new ExchangeRate() { Provider = ApiProviders.ApiLayer, BaseCurrency = "CNY", Rate = 1.23456M, Created = dt });
 
             _writer.Setup(e => e.Write(It.IsAny<ApiProviders>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<decimal>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             var getExchange = scope.ServiceProvider.GetRequiredService<IGetExchangeRate>();
-            Func<Task> action = async () => await getExchange.Execute(ApiProviders.ApiLayer,"USD", "",  CancellationToken.None);
+            Func<Task> action = async () => await getExchange.Execute(ApiProviders.ApiLayer, "USD", "", CancellationToken.None);
 
             _ = await action.Should().ThrowAsync<ArgumentNullException>();
         }
@@ -124,9 +125,9 @@
         {
             var dt = DateTime.UtcNow;
             using var scope = _provider.CreateScope();
-
+            
             var getExchange = scope.ServiceProvider.GetRequiredService<IGetExchangeRate>();
-            var data = await getExchange.Execute(ApiProviders.ApiLayer,"USD", "USD",  CancellationToken.None);
+            var data = await getExchange.Execute(ApiProviders.ApiLayer, "USD", "USD", CancellationToken.None);
 
             data.Should().BeEquivalentTo(new ExchangeRate() { Provider = ApiProviders.ApiLayer, BaseCurrency = "USD", ToCurrency = "USD", Rate = 1M, Created = dt.Date });
         }

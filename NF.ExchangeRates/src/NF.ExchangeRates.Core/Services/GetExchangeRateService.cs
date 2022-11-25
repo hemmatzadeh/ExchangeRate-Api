@@ -27,7 +27,7 @@ namespace NF.ExchangeRates.Core.Services
             _cache = cache;
         }
 
-        public Task<ExchangeRate> Execute(ApiProviders provider,string from, string to,  CancellationToken cancellationToken = default)
+        public Task<ExchangeRate> Execute(ApiProviders provider, string from, string to, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(from))
             {
@@ -44,7 +44,7 @@ namespace NF.ExchangeRates.Core.Services
             to = to.Trim().ToUpperInvariant();
             if (from.Equals(to, StringComparison.OrdinalIgnoreCase))
             {
-                return Task.FromResult(new ExchangeRate { BaseCurrency = from, Rate = 1M, Created = _clock.UtcNow.Date, ToCurrency = to });
+                return Task.FromResult(new ExchangeRate { Provider = provider, BaseCurrency = from, Rate = 1M, Created = _clock.UtcNow.Date, ToCurrency = to });
             }
             return GetFromDbOrProvider(from, to, provider, cancellationToken);
         }

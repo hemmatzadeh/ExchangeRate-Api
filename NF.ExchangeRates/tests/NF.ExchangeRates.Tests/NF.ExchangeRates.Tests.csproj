@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\NF.ExchangeRates.ApiLayerCurrencyData\NF.ExchangeRates.ApiLayerCurrencyData.csproj" />
     <ProjectReference Include="..\..\src\NF.ExchangeRates.MSSql\NF.ExchangeRates.MsSql.csproj" />
   </ItemGroup>
 
